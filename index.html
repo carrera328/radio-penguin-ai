@@ -237,9 +237,64 @@
       line-height: 1.7;
     }
 
+    .card .spanish-note {
+      display: block;
+      margin-top: 0.75rem;
+      font-style: italic;
+      font-size: 0.88rem;
+    }
+
+    /* How We Work */
+    .process {
+      padding: 5rem 0;
+    }
+
+    .process h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+
+    .step {
+      text-align: center;
+    }
+
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .step h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .step p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
     /* About */
     .about {
       padding: 5rem 0;
+      background: var(--bg-alt);
     }
 
     .about-content {
@@ -295,7 +350,6 @@
     /* CTA */
     .cta {
       padding: 5rem 0;
-      background: var(--bg-alt);
       text-align: center;
     }
 
@@ -346,7 +400,12 @@
       .hero h1 { font-size: 2.25rem; }
       .hero p { font-size: 1.05rem; }
       .cards { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
       .nav-links { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .steps { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -363,7 +422,7 @@
         <li><a href="#about">About</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
-      <a href="#contact" class="btn btn-primary">Let's Talk</a>
+      <a href="mailto:hello@radiopenguinai.com" class="btn btn-primary">Let's Talk</a>
     </div>
   </nav>
 
@@ -373,7 +432,7 @@
       <h1>Your software should work harder than you do.</h1>
       <p>We help businesses get more from their existing systems — and build AI-powered tools to replace the ones that aren't pulling their weight.</p>
       <div class="hero-buttons">
-        <a href="#contact" class="btn btn-primary">Let's Talk</a>
+        <a href="mailto:hello@radiopenguinai.com" class="btn btn-primary">Let's Talk</a>
         <a href="#services" class="btn btn-outline">What We Do</a>
       </div>
     </div>
@@ -388,23 +447,54 @@
       <div class="cards">
         <div class="card">
           <div class="card-icon">&#9889;</div>
-          <h3>Built by AI. Designed for your business.</h3>
-          <p>We don't just use AI as a feature — we use it to build your entire solution from the ground up. That means faster development, lower costs, and software that's built around how your business actually works. No bloated platforms. No features you'll never touch. No per-seat licensing that scales against you. The result? You get tools that compete with software costing 5x or 10x more — purpose-built, fully owned by you, and free of the dependencies that keep you locked into expensive vendors.</p>
+          <h3>Your data. Your systems. One AI that connects it all.</h3>
+          <p>Every business is sitting on gold — customer data in your CRM, documents scattered across drives, conversations buried in email threads, processes trapped in spreadsheets. The problem isn't the data. It's that nobody can get to it fast enough.</p>
+          <p style="margin-top: 0.75rem;">We build AI systems that plug directly into the tools you already use — Salesforce, Google Drive, Slack, your databases, your internal docs — and turn them into something your team can just talk to. Ask a question, get an answer pulled from your actual business data. No switching between five tabs. No digging through folders. No waiting on someone who "knows where that file is."</p>
+          <p style="margin-top: 0.75rem;">This is what companies like Microsoft charge a fortune for with Copilot. We build it custom for your business, connected to your specific systems, for a fraction of the cost. Your team gets smarter overnight.</p>
         </div>
         <div class="card">
-          <div class="card-icon">&#9878;</div>
-          <h3>Compete like the big guys. Spend like you.</h3>
-          <p>The difference between your business and the next tier up often comes down to software — better automation, better data, better workflows. We eliminate that gap. We build the same features that companies pay six figures a year for in platforms like ServiceNow, HubSpot, or SAP — intelligent case routing, automated reporting, CRM workflows, data integrations — and we deliver them as custom tools built specifically for your operations. No compromises, no unnecessary complexity, and no recurring license fees eating into your margins.</p>
+          <div class="card-icon">&#127760;</div>
+          <h3>Look like you mean business.</h3>
+          <p>Whether you're starting from nothing or stuck with a site that looks like it was built in 2012, we get you online fast. Clean, modern websites that load quick, look sharp on every device, and actually bring in leads. No templates. No page builders. No monthly fees to platforms that hold your site hostage. We build it, you own it.</p>
         </div>
         <div class="card">
           <div class="card-icon">&#9741;</div>
           <h3>Get more out of what you already have.</h3>
-          <p>Already on Salesforce or another CRM? We'll make it work the way it should. Our team brings enterprise-grade architecture to your org — cleaning up technical debt, building robust integrations, and layering in AI automation so your systems actually drive your business forward instead of slowing it down. From trigger frameworks and security overhauls to custom integrations with cloud services, we've done this across insurance, healthcare, government, and logistics.</p>
+          <p>Already on Salesforce or another CRM? We'll make it work the way it should. Our team brings enterprise-grade architecture to your org — cleaning up years of workarounds, building robust integrations, and layering in AI automation so your systems actually drive your business forward instead of slowing it down. We've done this across insurance, healthcare, government, and logistics.</p>
         </div>
         <div class="card">
-          <div class="card-icon">&#9733;</div>
-          <h3>Big-firm expertise. None of the big-firm waste.</h3>
-          <p>You know the drill with the big consultancies. Months of discovery, endless strategy decks, a rotating cast of junior developers, and a final product built on yesterday's tools. Half your budget goes to overhead and brand name — not the actual work. We cut all of that out. You work directly with senior engineers who build with the most modern tools from day one. AI is embedded in how we work, how we build, and what we deliver — not tacked on as a talking point. We're your AI guys. Automating the workflows that eat up your team's time, making your data actually useful, building tools that let you do more with less — we find the opportunities and make them real.</p>
+          <div class="card-icon">&#128666;</div>
+          <h3>Your own ordering system. No commissions. No middleman.</h3>
+          <p>Tired of handing 30% of every order to delivery apps? We build custom ordering and delivery platforms for restaurants and food businesses — your brand, your customers, your data. Online ordering, real-time driver tracking, route optimization, and customer notifications — all built with AI, all owned by you. Stop renting your customer relationships from someone else.</p>
+          <span class="spanish-note">Servicio disponible en espa&ntilde;ol.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="process" id="process">
+    <div class="container">
+      <h2>Simple. No fluff. No surprises.</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>We talk.</h3>
+          <p>Tell us what's slowing your business down. We'll have an honest conversation about what AI can actually fix and what it can't.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>We scope it.</h3>
+          <p>You get a clear proposal — what we're building, what it costs, and when it's done. No six-month discovery phase.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>We build it.</h3>
+          <p>Senior engineers building with the most modern tools from day one. You see progress weekly, not quarterly.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <h3>It's yours.</h3>
+          <p>Everything we build, you own. No vendor lock-in. No recurring license fees. Just software that works for your business.</p>
         </div>
       </div>
     </div>
@@ -420,7 +510,7 @@
         <div class="about-highlights">
           <h3>What we bring:</h3>
           <ul>
-            <li>5+ years of enterprise Salesforce architecture</li>
+            <li>20+ years of enterprise software development and architecture</li>
             <li>Hands-on experience across insurance, healthcare, government, and logistics</li>
             <li>Bilingual team (English & Spanish)</li>
             <li>Deep AI expertise — not just prompt engineering, but real integrations that move data and automate decisions</li>
