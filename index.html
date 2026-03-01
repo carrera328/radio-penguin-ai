@@ -109,6 +109,30 @@
 
     .nav-links a:hover { color: var(--text); }
 
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .lang-toggle {
+      background: none;
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.3rem 0.6rem;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+      letter-spacing: 0.03em;
+    }
+
+    .lang-toggle:hover {
+      color: var(--text);
+      border-color: var(--text);
+    }
+
     .btn {
       display: inline-block;
       padding: 0.6rem 1.5rem;
@@ -418,22 +442,25 @@
         Radio Penguin <span>AI</span>
       </div>
       <ul class="nav-links">
-        <li><a href="#services">Services</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#services" data-i18n="nav.services">Services</a></li>
+        <li><a href="#about" data-i18n="nav.about">About</a></li>
+        <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
       </ul>
-      <a href="mailto:hello@radiopenguinai.com" class="btn btn-primary">Let's Talk</a>
+      <div class="nav-actions">
+        <button id="lang-toggle" class="lang-toggle" aria-label="Switch language">ES</button>
+        <a href="mailto:hello@radiopenguinai.com" class="btn btn-primary" data-i18n="nav.talk">Let's Talk</a>
+      </div>
     </div>
   </nav>
 
   <section class="hero">
     <div class="container">
-      <div class="hero-label">AI & Salesforce Consulting</div>
-      <h1>Your software should work harder than you do.</h1>
-      <p>We help businesses get more from their existing systems — and build AI-powered tools to replace the ones that aren't pulling their weight.</p>
+      <div class="hero-label" data-i18n="hero.label">AI & Salesforce Consulting</div>
+      <h1 data-i18n="hero.title">Your software should work harder than you do.</h1>
+      <p data-i18n="hero.subtitle">We help businesses get more from their existing systems — and build AI-powered tools to replace the ones that aren't pulling their weight.</p>
       <div class="hero-buttons">
-        <a href="mailto:hello@radiopenguinai.com" class="btn btn-primary">Let's Talk</a>
-        <a href="#services" class="btn btn-outline">What We Do</a>
+        <a href="mailto:hello@radiopenguinai.com" class="btn btn-primary" data-i18n="hero.btn.talk">Let's Talk</a>
+        <a href="#services" class="btn btn-outline" data-i18n="hero.btn.services">What We Do</a>
       </div>
     </div>
   </section>
@@ -441,32 +468,32 @@
   <section class="services" id="services">
     <div class="container">
       <div class="section-header">
-        <h2>Close the competitive gap.</h2>
-        <p>Enterprise software shouldn't be reserved for enterprises. We use AI to build solutions from the ground up — giving you the same capabilities as the next tier of business, at a fraction of the cost.</p>
+        <h2 data-i18n="services.title">Close the competitive gap.</h2>
+        <p data-i18n="services.subtitle">Enterprise software shouldn't be reserved for enterprises. We use AI to build solutions from the ground up — giving you the same capabilities as the next tier of business, at a fraction of the cost.</p>
       </div>
       <div class="cards">
         <div class="card">
           <div class="card-icon">&#9889;</div>
-          <h3>Your data. Your systems. One AI that connects it all.</h3>
-          <p>Every business is sitting on gold — customer data in your CRM, documents scattered across drives, conversations buried in email threads, processes trapped in spreadsheets. The problem isn't the data. It's that nobody can get to it fast enough.</p>
-          <p style="margin-top: 0.75rem;">We build AI systems that plug directly into the tools you already use — Salesforce, Google Drive, Slack, your databases, your internal docs — and turn them into something your team can just talk to. Ask a question, get an answer pulled from your actual business data. No switching between five tabs. No digging through folders. No waiting on someone who "knows where that file is."</p>
-          <p style="margin-top: 0.75rem;">This is what companies like Microsoft charge a fortune for with Copilot. We build it custom for your business, connected to your specific systems, for a fraction of the cost. Your team gets smarter overnight.</p>
+          <h3 data-i18n="card1.title">Your data. Your systems. One AI that connects it all.</h3>
+          <p data-i18n="card1.p1">Every business is sitting on gold — customer data in your CRM, documents scattered across drives, conversations buried in email threads, processes trapped in spreadsheets. The problem isn't the data. It's that nobody can get to it fast enough.</p>
+          <p style="margin-top: 0.75rem;" data-i18n="card1.p2">We build AI systems that plug directly into the tools you already use — Salesforce, Google Drive, Slack, your databases, your internal docs — and turn them into something your team can just talk to. Ask a question, get an answer pulled from your actual business data. No switching between five tabs. No digging through folders. No waiting on someone who "knows where that file is."</p>
+          <p style="margin-top: 0.75rem;" data-i18n="card1.p3">This is what companies like Microsoft charge a fortune for with Copilot. We build it custom for your business, connected to your specific systems, for a fraction of the cost. Your team gets smarter overnight.</p>
         </div>
         <div class="card">
           <div class="card-icon">&#127760;</div>
-          <h3>Look like you mean business.</h3>
-          <p>Whether you're starting from nothing or stuck with a site that looks like it was built in 2012, we get you online fast. Clean, modern websites that load quick, look sharp on every device, and actually bring in leads. No templates. No page builders. No monthly fees to platforms that hold your site hostage. We build it, you own it.</p>
+          <h3 data-i18n="card2.title">Look like you mean business.</h3>
+          <p data-i18n="card2.p">Whether you're starting from nothing or stuck with a site that looks like it was built in 2012, we get you online fast. Clean, modern websites that load quick, look sharp on every device, and actually bring in leads. No templates. No page builders. No monthly fees to platforms that hold your site hostage. We build it, you own it.</p>
         </div>
         <div class="card">
           <div class="card-icon">&#9741;</div>
-          <h3>Get more out of what you already have.</h3>
-          <p>Already on Salesforce or another CRM? We'll make it work the way it should. Our team brings enterprise-grade architecture to your org — cleaning up years of workarounds, building robust integrations, and layering in AI automation so your systems actually drive your business forward instead of slowing it down. We've done this across insurance, healthcare, government, and logistics.</p>
+          <h3 data-i18n="card3.title">Get more out of what you already have.</h3>
+          <p data-i18n="card3.p">Already on Salesforce or another CRM? We'll make it work the way it should. Our team brings enterprise-grade architecture to your org — cleaning up years of workarounds, building robust integrations, and layering in AI automation so your systems actually drive your business forward instead of slowing it down. We've done this across insurance, healthcare, government, and logistics.</p>
         </div>
         <div class="card">
           <div class="card-icon">&#128666;</div>
-          <h3>Your own ordering system. No commissions. No middleman.</h3>
-          <p>Tired of handing 30% of every order to delivery apps? We build custom ordering and delivery platforms for restaurants and food businesses — your brand, your customers, your data. Online ordering, real-time driver tracking, route optimization, and customer notifications — all built with AI, all owned by you. Stop renting your customer relationships from someone else.</p>
-          <span class="spanish-note">Servicio disponible en espa&ntilde;ol.</span>
+          <h3 data-i18n="card4.title">Your own ordering system. No commissions. No middleman.</h3>
+          <p data-i18n="card4.p">Tired of handing 30% of every order to delivery apps? We build custom ordering and delivery platforms for restaurants and food businesses — your brand, your customers, your data. Online ordering, real-time driver tracking, route optimization, and customer notifications — all built with AI, all owned by you. Stop renting your customer relationships from someone else.</p>
+          <span class="spanish-note" data-i18n="card4.spanish">Servicio disponible en espa&ntilde;ol.</span>
         </div>
       </div>
     </div>
@@ -474,27 +501,27 @@
 
   <section class="process" id="process">
     <div class="container">
-      <h2>Simple. No fluff. No surprises.</h2>
+      <h2 data-i18n="process.title">Simple. No fluff. No surprises.</h2>
       <div class="steps">
         <div class="step">
           <div class="step-number">1</div>
-          <h3>We talk.</h3>
-          <p>Tell us what's slowing your business down. We'll have an honest conversation about what AI can actually fix and what it can't.</p>
+          <h3 data-i18n="step1.title">We talk.</h3>
+          <p data-i18n="step1.p">Tell us what's slowing your business down. We'll have an honest conversation about what AI can actually fix and what it can't.</p>
         </div>
         <div class="step">
           <div class="step-number">2</div>
-          <h3>We scope it.</h3>
-          <p>You get a clear proposal — what we're building, what it costs, and when it's done. No six-month discovery phase.</p>
+          <h3 data-i18n="step2.title">We scope it.</h3>
+          <p data-i18n="step2.p">You get a clear proposal — what we're building, what it costs, and when it's done. No six-month discovery phase.</p>
         </div>
         <div class="step">
           <div class="step-number">3</div>
-          <h3>We build it.</h3>
-          <p>Senior engineers building with the most modern tools from day one. You see progress weekly, not quarterly.</p>
+          <h3 data-i18n="step3.title">We build it.</h3>
+          <p data-i18n="step3.p">Senior engineers building with the most modern tools from day one. You see progress weekly, not quarterly.</p>
         </div>
         <div class="step">
           <div class="step-number">4</div>
-          <h3>It's yours.</h3>
-          <p>Everything we build, you own. No vendor lock-in. No recurring license fees. Just software that works for your business.</p>
+          <h3 data-i18n="step4.title">It's yours.</h3>
+          <p data-i18n="step4.p">Everything we build, you own. No vendor lock-in. No recurring license fees. Just software that works for your business.</p>
         </div>
       </div>
     </div>
@@ -503,17 +530,17 @@
   <section class="about" id="about">
     <div class="container">
       <div class="about-content">
-        <h2>Built on real experience. Not slide decks.</h2>
-        <p>Radio Penguin AI was founded by engineers who spent years building enterprise systems for some of the most complex organizations in the country — from federal agencies to insurance carriers to healthcare networks.</p>
-        <p>We've architected claims management platforms, designed integrations between Salesforce and cloud services, led security compliance overhauls, and built the frameworks that development teams rely on every day. Our work spans Service Cloud, Apex, enterprise integration patterns, and now AI-powered automation.</p>
-        <p>We started Radio Penguin AI because we saw too many companies stuck between two bad options: overpaying for big-name consultancies or getting burned by freelancers who overpromise. We're the middle ground — senior-level expertise, delivered directly, without the overhead.</p>
+        <h2 data-i18n="about.title">Built on real experience. Not slide decks.</h2>
+        <p data-i18n="about.p1">Radio Penguin AI was founded by engineers who spent years building enterprise systems for some of the most complex organizations in the country — from federal agencies to insurance carriers to healthcare networks.</p>
+        <p data-i18n="about.p2">We've architected claims management platforms, designed integrations between Salesforce and cloud services, led security compliance overhauls, and built the frameworks that development teams rely on every day. Our work spans Service Cloud, Apex, enterprise integration patterns, and now AI-powered automation.</p>
+        <p data-i18n="about.p3">We started Radio Penguin AI because we saw too many companies stuck between two bad options: overpaying for big-name consultancies or getting burned by freelancers who overpromise. We're the middle ground — senior-level expertise, delivered directly, without the overhead.</p>
         <div class="about-highlights">
-          <h3>What we bring:</h3>
+          <h3 data-i18n="about.highlights.title">What we bring:</h3>
           <ul>
-            <li>20+ years of enterprise software development and architecture</li>
-            <li>Hands-on experience across insurance, healthcare, government, and logistics</li>
-            <li>Bilingual team (English & Spanish)</li>
-            <li>Deep AI expertise — not just prompt engineering, but real integrations that move data and automate decisions</li>
+            <li data-i18n="about.h1">20+ years of enterprise software development and architecture</li>
+            <li data-i18n="about.h2">Hands-on experience across insurance, healthcare, government, and logistics</li>
+            <li data-i18n="about.h3">Bilingual team (English & Spanish)</li>
+            <li data-i18n="about.h4">Deep AI expertise — not just prompt engineering, but real integrations that move data and automate decisions</li>
           </ul>
         </div>
       </div>
@@ -522,10 +549,10 @@
 
   <section class="cta" id="contact">
     <div class="container">
-      <h2>Let's figure out what's possible.</h2>
-      <p>Whether you've got a specific project in mind or just want to explore what AI could do for your business — reach out. We'll have an honest conversation about what makes sense and what doesn't.</p>
+      <h2 data-i18n="cta.title">Let's figure out what's possible.</h2>
+      <p data-i18n="cta.subtitle">Whether you've got a specific project in mind or just want to explore what AI could do for your business — reach out. We'll have an honest conversation about what makes sense and what doesn't.</p>
       <a href="mailto:hello@radiopenguinai.com" class="email-link">hello@radiopenguinai.com</a>
-      <a href="mailto:hello@radiopenguinai.com" class="btn btn-primary">Get in Touch</a>
+      <a href="mailto:hello@radiopenguinai.com" class="btn btn-primary" data-i18n="cta.btn">Get in Touch</a>
     </div>
   </section>
 
@@ -535,9 +562,136 @@
         <img src="assets/icononly_transparent_nobuffer.png" alt="Radio Penguin AI">
         Radio Penguin <span>AI</span>
       </div>
-      <p>&copy; 2026 Radio Penguin AI. All rights reserved.</p>
+      <p data-i18n="footer.copyright">&copy; 2026 Radio Penguin AI. All rights reserved.</p>
     </div>
   </footer>
+
+  <script>
+    (function () {
+      var translations = {
+        es: {
+          // Nav
+          'nav.services': 'Servicios',
+          'nav.about': 'Nosotros',
+          'nav.contact': 'Contacto',
+          'nav.talk': 'Hablemos',
+
+          // Hero
+          'hero.label': 'Consultor\u00eda de IA y Salesforce',
+          'hero.title': 'Tu software deber\u00eda trabajar m\u00e1s duro que t\u00fa.',
+          'hero.subtitle': 'Ayudamos a las empresas a sacar m\u00e1s provecho de sus sistemas actuales \u2014 y creamos herramientas con IA para reemplazar las que no est\u00e1n dando resultados.',
+          'hero.btn.talk': 'Hablemos',
+          'hero.btn.services': 'Qu\u00e9 Hacemos',
+
+          // Services
+          'services.title': 'Cierra la brecha competitiva.',
+          'services.subtitle': 'El software empresarial no deber\u00eda estar reservado para las grandes corporaciones. Usamos IA para construir soluciones desde cero \u2014 d\u00e1ndote las mismas capacidades que el siguiente nivel de negocio, a una fracci\u00f3n del costo.',
+
+          // Card 1
+          'card1.title': 'Tus datos. Tus sistemas. Una IA que lo conecta todo.',
+          'card1.p1': 'Cada negocio est\u00e1 sentado sobre oro \u2014 datos de clientes en tu CRM, documentos dispersos en carpetas, conversaciones enterradas en correos, procesos atrapados en hojas de c\u00e1lculo. El problema no son los datos. Es que nadie puede acceder a ellos lo suficientemente r\u00e1pido.',
+          'card1.p2': 'Construimos sistemas de IA que se conectan directamente a las herramientas que ya usas \u2014 Salesforce, Google Drive, Slack, tus bases de datos, tus documentos internos \u2014 y los convertimos en algo con lo que tu equipo simplemente puede hablar. Haz una pregunta, obt\u00e9n una respuesta basada en los datos reales de tu negocio. Sin cambiar entre cinco pesta\u00f1as. Sin buscar en carpetas. Sin esperar a alguien que \u201csabe d\u00f3nde est\u00e1 ese archivo.\u201d',
+          'card1.p3': 'Esto es lo que empresas como Microsoft cobran una fortuna con Copilot. Nosotros lo construimos a medida para tu negocio, conectado a tus sistemas espec\u00edficos, por una fracci\u00f3n del costo. Tu equipo se vuelve m\u00e1s inteligente de la noche a la ma\u00f1ana.',
+
+          // Card 2
+          'card2.title': 'Proyecta la imagen que tu negocio merece.',
+          'card2.p': 'Ya sea que empieces desde cero o tengas un sitio que parece de 2012, te ponemos en l\u00ednea r\u00e1pido. Sitios web limpios y modernos que cargan r\u00e1pido, se ven bien en cualquier dispositivo y realmente generan clientes potenciales. Sin plantillas. Sin constructores de p\u00e1ginas. Sin cuotas mensuales a plataformas que tienen tu sitio de reh\u00e9n. Lo construimos, t\u00fa lo posees.',
+
+          // Card 3
+          'card3.title': 'S\u00e1cale m\u00e1s provecho a lo que ya tienes.',
+          'card3.p': '\u00bfYa usas Salesforce u otro CRM? Haremos que funcione como deber\u00eda. Nuestro equipo aporta arquitectura de nivel empresarial a tu organizaci\u00f3n \u2014 limpiando a\u00f1os de parches, construyendo integraciones robustas y a\u00f1adiendo automatizaci\u00f3n con IA para que tus sistemas realmente impulsen tu negocio en lugar de frenarlo. Lo hemos hecho en seguros, salud, gobierno y log\u00edstica.',
+
+          // Card 4
+          'card4.title': 'Tu propio sistema de pedidos. Sin comisiones. Sin intermediarios.',
+          'card4.p': '\u00bfCansado de entregar el 30% de cada pedido a apps de delivery? Construimos plataformas de pedidos y entregas personalizadas para restaurantes y negocios de comida \u2014 tu marca, tus clientes, tus datos. Pedidos en l\u00ednea, rastreo de repartidores en tiempo real, optimizaci\u00f3n de rutas y notificaciones al cliente \u2014 todo construido con IA, todo tuyo. Deja de alquilar tus relaciones con clientes.',
+          'card4.spanish': 'Atenci\u00f3n completa en espa\u00f1ol \u2014 sin barreras de idioma.',
+
+          // Process
+          'process.title': 'Simple. Sin rodeos. Sin sorpresas.',
+          'step1.title': 'Hablamos.',
+          'step1.p': 'Cu\u00e9ntanos qu\u00e9 est\u00e1 frenando tu negocio. Tendremos una conversaci\u00f3n honesta sobre lo que la IA realmente puede resolver y lo que no.',
+          'step2.title': 'Lo definimos.',
+          'step2.p': 'Recibes una propuesta clara \u2014 qu\u00e9 vamos a construir, cu\u00e1nto cuesta y cu\u00e1ndo estar\u00e1 listo. Sin fases de descubrimiento de seis meses.',
+          'step3.title': 'Lo construimos.',
+          'step3.p': 'Ingenieros senior construyendo con las herramientas m\u00e1s modernas desde el primer d\u00eda. Ves avances semanalmente, no trimestralmente.',
+          'step4.title': 'Es tuyo.',
+          'step4.p': 'Todo lo que construimos, t\u00fa lo posees. Sin dependencia de proveedores. Sin cuotas recurrentes de licencia. Solo software que funciona para tu negocio.',
+
+          // About
+          'about.title': 'Construido con experiencia real. No con presentaciones.',
+          'about.p1': 'Radio Penguin AI fue fundado por ingenieros que pasaron a\u00f1os construyendo sistemas empresariales para algunas de las organizaciones m\u00e1s complejas del pa\u00eds \u2014 desde agencias federales hasta aseguradoras y redes de salud.',
+          'about.p2': 'Hemos dise\u00f1ado plataformas de gesti\u00f3n de reclamos, creado integraciones entre Salesforce y servicios en la nube, liderado proyectos de cumplimiento de seguridad y construido los frameworks en los que los equipos de desarrollo conf\u00edan cada d\u00eda. Nuestro trabajo abarca Service Cloud, Apex, patrones de integraci\u00f3n empresarial y ahora automatizaci\u00f3n con IA.',
+          'about.p3': 'Fundamos Radio Penguin AI porque vimos demasiadas empresas atrapadas entre dos malas opciones: pagar de m\u00e1s a consultoras de renombre o quemarse con freelancers que prometen de m\u00e1s. Somos el punto medio \u2014 experiencia de nivel senior, entregada directamente, sin costos innecesarios.',
+          'about.highlights.title': 'Lo que ofrecemos:',
+          'about.h1': 'M\u00e1s de 20 a\u00f1os de desarrollo y arquitectura de software empresarial',
+          'about.h2': 'Experiencia pr\u00e1ctica en seguros, salud, gobierno y log\u00edstica',
+          'about.h3': 'Equipo biling\u00fce (ingl\u00e9s y espa\u00f1ol)',
+          'about.h4': 'Profunda experiencia en IA \u2014 no solo ingenier\u00eda de prompts, sino integraciones reales que mueven datos y automatizan decisiones',
+
+          // CTA
+          'cta.title': 'Descubramos qu\u00e9 es posible.',
+          'cta.subtitle': 'Ya sea que tengas un proyecto espec\u00edfico en mente o solo quieras explorar lo que la IA podr\u00eda hacer por tu negocio \u2014 escr\u00edbenos. Tendremos una conversaci\u00f3n honesta sobre lo que tiene sentido y lo que no.',
+          'cta.btn': 'Cont\u00e1ctanos',
+
+          // Footer
+          'footer.copyright': '\u00a9 2026 Radio Penguin AI. Todos los derechos reservados.'
+        }
+      };
+
+      var defaults = {};
+      var titleEN = 'Radio Penguin AI | AI & Salesforce Consulting';
+      var titleES = 'Radio Penguin AI | Consultor\u00eda de IA y Salesforce';
+
+      // Save English defaults from DOM
+      document.querySelectorAll('[data-i18n]').forEach(function (el) {
+        defaults[el.getAttribute('data-i18n')] = el.innerHTML;
+      });
+
+      function applyLanguage(lang) {
+        document.documentElement.setAttribute('lang', lang);
+
+        if (lang === 'es') {
+          document.querySelectorAll('[data-i18n]').forEach(function (el) {
+            var key = el.getAttribute('data-i18n');
+            if (translations.es[key]) el.innerHTML = translations.es[key];
+          });
+          document.title = titleES;
+        } else {
+          document.querySelectorAll('[data-i18n]').forEach(function (el) {
+            var key = el.getAttribute('data-i18n');
+            if (defaults[key]) el.innerHTML = defaults[key];
+          });
+          document.title = titleEN;
+        }
+
+        // Update toggle button text
+        var toggle = document.getElementById('lang-toggle');
+        if (toggle) {
+          toggle.textContent = lang === 'es' ? 'EN' : 'ES';
+          toggle.setAttribute('aria-label', lang === 'es' ? 'Switch to English' : 'Cambiar a espa\u00f1ol');
+        }
+
+        localStorage.setItem('lang', lang);
+      }
+
+      function detectLanguage() {
+        var stored = localStorage.getItem('lang');
+        if (stored) return stored;
+        var browserLang = navigator.language || navigator.userLanguage || '';
+        return browserLang.startsWith('es') ? 'es' : 'en';
+      }
+
+      // Apply language on load
+      var lang = detectLanguage();
+      applyLanguage(lang);
+
+      // Toggle handler
+      document.getElementById('lang-toggle').addEventListener('click', function () {
+        var current = document.documentElement.getAttribute('lang');
+        applyLanguage(current === 'es' ? 'en' : 'es');
+      });
+    })();
+  </script>
 
 </body>
 </html>
