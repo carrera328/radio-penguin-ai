@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Radio Penguin AI | AI-Powered Business Software Consulting</title>
+  <title>Radio Penguin AI | AI & Salesforce Consulting</title>
   <style>
     :root {
       --bg: #ffffff;
@@ -150,12 +150,10 @@
       letter-spacing: -0.02em;
     }
 
-    .hero h1 span { color: var(--accent); }
-
     .hero p {
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       color: var(--text-muted);
-      max-width: 600px;
+      max-width: 640px;
       margin: 0 auto 2.5rem;
     }
 
@@ -185,7 +183,7 @@
 
     .section-header p {
       color: var(--text-muted);
-      max-width: 550px;
+      max-width: 580px;
       margin: 0 auto;
     }
 
@@ -214,14 +212,15 @@
     }
 
     .card h3 {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       font-weight: 600;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
     }
 
     .card p {
       color: var(--text-muted);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
+      line-height: 1.65;
     }
 
     /* About */
@@ -229,17 +228,16 @@
       padding: 5rem 0;
     }
 
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
+    .about-content {
+      max-width: 800px;
+      margin: 0 auto;
     }
 
     .about h2 {
       font-size: 2rem;
       font-weight: 700;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
     }
 
     .about p {
@@ -248,23 +246,36 @@
       font-size: 1.05rem;
     }
 
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+    .about-highlights {
       margin-top: 2rem;
+      margin-bottom: 2rem;
     }
 
-    .stat h3 {
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--accent);
+    .about-highlights h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
     }
 
-    .stat p {
-      font-size: 0.85rem;
+    .about-highlights ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .about-highlights li {
       color: var(--text-muted);
-      margin: 0;
+      font-size: 1rem;
+      padding: 0.4rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+
+    .about-highlights li::before {
+      content: "\2014";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 700;
     }
 
     /* CTA */
@@ -282,9 +293,16 @@
 
     .cta p {
       color: var(--text-muted);
-      max-width: 500px;
-      margin: 0 auto 2rem;
+      max-width: 560px;
+      margin: 0 auto 1.5rem;
       font-size: 1.05rem;
+    }
+
+    .cta .email-link {
+      display: block;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
     }
 
     /* Footer */
@@ -308,9 +326,8 @@
     /* Responsive */
     @media (max-width: 768px) {
       .hero h1 { font-size: 2.25rem; }
+      .hero p { font-size: 1.05rem; }
       .cards { grid-template-columns: 1fr; }
-      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-      .stats { grid-template-columns: repeat(3, 1fr); }
       .nav-links { display: none; }
     }
   </style>
@@ -325,18 +342,18 @@
         <li><a href="#about">About</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
-      <a href="#contact" class="btn btn-primary">Get Started</a>
+      <a href="#contact" class="btn btn-primary">Let's Talk</a>
     </div>
   </nav>
 
   <section class="hero">
     <div class="container">
-      <div class="hero-label">AI-Powered Consulting</div>
-      <h1>Build smarter.<br>Spend <span>less</span>.</h1>
-      <p>We use AI to build custom business software that replaces expensive licensing — saving you money without sacrificing capability.</p>
+      <div class="hero-label">AI & Salesforce Consulting</div>
+      <h1>Your software should work harder than you do.</h1>
+      <p>We help mid-market companies get more from their existing systems — and build AI-powered tools to replace the ones that aren't pulling their weight.</p>
       <div class="hero-buttons">
-        <a href="#contact" class="btn btn-primary">Talk to Us</a>
-        <a href="#services" class="btn btn-outline">Our Services</a>
+        <a href="#contact" class="btn btn-primary">Let's Talk</a>
+        <a href="#services" class="btn btn-outline">What We Do</a>
       </div>
     </div>
   </section>
@@ -344,49 +361,44 @@
   <section class="services" id="services">
     <div class="container">
       <div class="section-header">
-        <h2>What We Do</h2>
-        <p>End-to-end AI consulting to modernize your business operations</p>
+        <h2>What we actually do.</h2>
+        <p>No buzzwords. No vaporware. Just practical AI and Salesforce work that saves you time and money.</p>
       </div>
       <div class="cards">
         <div class="card">
-          <div class="card-icon">&#9881;</div>
-          <h3>Custom Software</h3>
-          <p>Bespoke applications built to your exact needs — no off-the-shelf compromises or per-seat fees.</p>
+          <div class="card-icon">&#9889;</div>
+          <h3>AI Integration & Automation</h3>
+          <p>Most companies know AI can help. Few know where to start. We embed AI directly into your existing workflows — automating repetitive tasks, surfacing insights from your data, and building intelligent tools your team will actually use. Whether it's automating case routing, generating reports from natural language, or building custom AI agents that pull from your CRM — we make it real.</p>
         </div>
         <div class="card">
-          <div class="card-icon">&#9889;</div>
-          <h3>AI Integration</h3>
-          <p>Embed AI into your existing workflows to automate repetitive tasks and unlock new insights from your data.</p>
+          <div class="card-icon">&#9741;</div>
+          <h3>Salesforce Architecture & Optimization</h3>
+          <p>If your Salesforce org is a mess of workarounds and unused features, you're not alone. We architect, clean up, and optimize Salesforce implementations so they actually serve your business. From trigger frameworks and integrations to full org overhauls — we bring enterprise-grade architecture to mid-market companies without the enterprise price tag.</p>
         </div>
         <div class="card">
           <div class="card-icon">&#9878;</div>
-          <h3>Cost Optimization</h3>
-          <p>Audit your software stack and replace costly licenses with purpose-built tools that do exactly what you need.</p>
+          <h3>Custom Software & License Replacement</h3>
+          <p>That $50K/year platform your team uses for three features? We can build a custom tool that does exactly what you need — powered by AI, owned by you, and free of recurring license fees. We audit your software stack, identify where you're overpaying, and build purpose-built replacements that cost less and do more.</p>
         </div>
       </div>
     </div>
   </section>
 
   <section class="about" id="about">
-    <div class="container about-grid">
-      <div>
-        <h2>Why Radio Penguin AI?</h2>
-        <p>Most businesses overpay for software they barely use. We build exactly what you need — powered by AI, tailored to your operations, and owned by you.</p>
-        <p>No recurring license fees. No vendor lock-in. Just software that works for your business.</p>
-        <a href="#contact" class="btn btn-primary">Let's Talk</a>
-      </div>
-      <div class="stats">
-        <div class="stat">
-          <h3>60%</h3>
-          <p>Average cost savings</p>
-        </div>
-        <div class="stat">
-          <h3>2x</h3>
-          <p>Faster deployment</p>
-        </div>
-        <div class="stat">
-          <h3>100%</h3>
-          <p>Custom-built</p>
+    <div class="container">
+      <div class="about-content">
+        <h2>Built on real experience. Not slide decks.</h2>
+        <p>Radio Penguin AI was founded by engineers who spent years building enterprise systems for some of the most complex organizations in the country — from federal agencies to insurance carriers to healthcare networks.</p>
+        <p>We've architected claims management platforms, designed integrations between Salesforce and cloud services, led security compliance overhauls, and built the frameworks that development teams rely on every day. Our work spans Service Cloud, Apex, enterprise integration patterns, and now AI-powered automation.</p>
+        <p>We started Radio Penguin AI because we saw too many mid-market companies stuck between two bad options: overpaying for enterprise consultancies or getting burned by freelancers who overpromise. We're the middle ground — senior-level expertise, delivered directly, without the overhead.</p>
+        <div class="about-highlights">
+          <h3>What we bring:</h3>
+          <ul>
+            <li>5+ years of enterprise Salesforce architecture</li>
+            <li>Hands-on experience across insurance, healthcare, government, and logistics</li>
+            <li>Bilingual team (English & Spanish)</li>
+            <li>Deep AI expertise — not just prompt engineering, but real integrations that move data and automate decisions</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -394,9 +406,10 @@
 
   <section class="cta" id="contact">
     <div class="container">
-      <h2>Ready to cut your software costs?</h2>
-      <p>Get in touch and we'll show you how AI-built software can replace what you're overpaying for today.</p>
-      <a href="mailto:hello@radiopenguinai.com" class="btn btn-primary">Contact Us</a>
+      <h2>Let's figure out what's possible.</h2>
+      <p>Whether you've got a specific project in mind or just want to explore what AI could do for your business — reach out. We'll have an honest conversation about what makes sense and what doesn't.</p>
+      <a href="mailto:hello@radiopenguinai.com" class="email-link">hello@radiopenguinai.com</a>
+      <a href="mailto:hello@radiopenguinai.com" class="btn btn-primary">Get in Touch</a>
     </div>
   </section>
 
