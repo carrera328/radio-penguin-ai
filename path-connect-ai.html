@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Radio Penguin AI | Connect AI</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-alt: #f2f3f5;
+      --text: #15243c;
+      --text-muted: #616d7d;
+      --accent: #15243c;
+      --accent-hover: #0e1a2d;
+      --navy: #15243c;
+      --navy-hover: #0e1a2d;
+      --card-bg: #ffffff;
+      --card-border: #dde0e5;
+      --nav-bg: rgba(255, 255, 255, 0.92);
+      --footer-bg: #15243c;
+      --footer-text: #a0a8b4;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0d1117;
+        --bg-alt: #161b22;
+        --text: #e6edf3;
+        --text-muted: #8b949e;
+        --accent: #58a6ff;
+        --accent-hover: #79b8ff;
+        --navy: #e6edf3;
+        --navy-hover: #ffffff;
+        --card-bg: #161b22;
+        --card-border: #30363d;
+        --nav-bg: rgba(13, 17, 23, 0.92);
+        --footer-bg: #010409;
+        --footer-text: #8b949e;
+      }
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: var(--nav-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--card-border);
+      z-index: 100;
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .logo img {
+      height: 32px;
+      width: auto;
+    }
+
+    .logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .lang-toggle {
+      background: none;
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.3rem 0.6rem;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+      letter-spacing: 0.03em;
+    }
+
+    .lang-toggle:hover {
+      color: var(--text);
+      border-color: var(--text);
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.6rem 1.5rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: background 0.2s, transform 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover { background: var(--accent-hover); }
+
+    .btn-outline {
+      border: 2px solid var(--navy);
+      color: var(--navy);
+      background: transparent;
+    }
+
+    .btn-outline:hover {
+      background: var(--navy);
+      color: #fff;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 10rem 0 6rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 3.25rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 0 auto 2.5rem;
+    }
+
+    /* Imagine Section */
+    .imagine-section {
+      padding: 4rem 0;
+      background: var(--bg-alt);
+    }
+
+    .imagine-section h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .conversation {
+      background: var(--footer-bg);
+      color: #fff;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .conversation .q {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .conversation .a {
+      color: rgba(255, 255, 255, 0.75);
+      line-height: 1.7;
+    }
+
+    /* Services / Features */
+    .services {
+      padding: 5rem 0;
+      background: var(--bg-alt);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-header h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-header p {
+      color: var(--text-muted);
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 2rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+
+    .card h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.7;
+    }
+
+    /* Process */
+    .process {
+      padding: 5rem 0;
+    }
+
+    .process h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+
+    .step {
+      text-align: center;
+    }
+
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .step h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .step p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* Pricing Block */
+    .pricing-block {
+      background: var(--accent);
+      color: #fff;
+      padding: 3rem;
+      border-radius: 12px;
+      text-align: center;
+      margin: 3rem 0;
+    }
+
+    .pricing-block h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .pricing-block p {
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 1.5rem;
+    }
+
+    .pricing-block .btn-primary {
+      background: #fff;
+      color: var(--accent);
+    }
+
+    .pricing-block .btn-primary:hover {
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    /* CTA */
+    .cta {
+      padding: 5rem 0;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .cta p {
+      color: var(--text-muted);
+      max-width: 560px;
+      margin: 0 auto 1.5rem;
+      font-size: 1.05rem;
+    }
+
+    .email-link {
+      display: block;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      color: var(--accent);
+    }
+
+    .email-link:hover { color: var(--accent-hover); }
+
+    /* Footer */
+    footer {
+      background: var(--footer-bg);
+      color: var(--footer-text);
+      padding: 3rem 0;
+      text-align: center;
+      font-size: 0.85rem;
+    }
+
+    footer .logo {
+      color: #fff;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      display: inline-flex;
+      justify-content: center;
+    }
+
+    footer p { color: var(--footer-text); }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.25rem; }
+      .hero p { font-size: 1.05rem; }
+      .cards { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+      .nav-links { display: none; }
+      .nav-inner { gap: 0.5rem; }
+      .nav-actions { gap: 0.5rem; }
+      .btn-primary { padding: 0.5rem 1rem; font-size: 0.8rem; }
+      .logo { font-size: 1.1rem; gap: 0.4rem; min-width: 0; }
+      .logo img { height: 28px; }
+    }
+
+    @media (max-width: 480px) {
+      .steps { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container nav-inner">
+      <div class="logo">
+        <img src="assets/icononly_transparent_nobuffer.png" alt="Radio Penguin AI">
+        Radio Penguin <span>AI</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="/" data-i18n="nav.services">All Services</a></li>
+        <li><a href="/#about" data-i18n="nav.about">About</a></li>
+        <li><a href="/#contact" data-i18n="nav.contact">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button id="lang-toggle" class="lang-toggle" aria-label="Switch language">ES</button>
+        <a href="mailto:hello@radiopenguinai.com" class="btn btn-primary" data-i18n="nav.talk">Let's Talk</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="container">
+      <a href="/" style="color: var(--text-muted); font-size: 0.85rem;" data-i18n="hero.back">&larr; Back to all services</a>
+      <i data-lucide="brain-circuit" class="card-icon" style="width: 64px; height: 64px; display: block; margin: 1.5rem auto;"></i>
+      <h1 data-i18n="hero.title">Ask your business a question. Get a real answer.</h1>
+      <p data-i18n="hero.subtitle">We connect AI to the tools you already use &mdash; Salesforce, Google Drive, Slack, your databases &mdash; so you can talk to your business in plain English.</p>
+    </div>
+  </section>
+
+  <section class="imagine-section">
+    <div class="container">
+      <h2 data-i18n="imagine.title">Imagine this</h2>
+      <div class="conversation">
+        <div class="q" data-i18n="conv1.q">&ldquo;What&rsquo;s the status of the Johnson project and who&rsquo;s the lead on it?&rdquo;</div>
+        <div class="a" data-i18n="conv1.a">&ldquo;The Johnson project is in Phase 2 &mdash; design review. Sarah Chen is the lead. Last update was Tuesday: client approved the revised timeline.&rdquo;</div>
+      </div>
+      <div class="conversation">
+        <div class="q" data-i18n="conv2.q">&ldquo;Show me all customers in Indiana whose contracts renew in the next 90 days.&rdquo;</div>
+        <div class="a" data-i18n="conv2.a">&ldquo;Found 23 customers. 8 are flagged as at-risk based on recent support tickets. Want me to draft renewal outreach for the at-risk accounts?&rdquo;</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="services">
+    <div class="container">
+      <div class="section-header">
+        <h2 data-i18n="features.title">What it connects to</h2>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <i data-lucide="database" class="card-icon"></i>
+          <h3 data-i18n="feat1.title">Salesforce &amp; CRMs</h3>
+          <p data-i18n="feat1.desc">Pull data from any CRM without switching tabs or writing reports.</p>
+        </div>
+        <div class="card">
+          <i data-lucide="folder-search" class="card-icon"></i>
+          <h3 data-i18n="feat2.title">Google Drive &amp; Docs</h3>
+          <p data-i18n="feat2.desc">Search and summarize documents instantly across your entire drive.</p>
+        </div>
+        <div class="card">
+          <i data-lucide="message-square" class="card-icon"></i>
+          <h3 data-i18n="feat3.title">Slack &amp; Teams</h3>
+          <p data-i18n="feat3.desc">Surface information from conversations and channels on demand.</p>
+        </div>
+        <div class="card">
+          <i data-lucide="server" class="card-icon"></i>
+          <h3 data-i18n="feat4.title">Your Databases</h3>
+          <p data-i18n="feat4.desc">Connect directly to SQL, PostgreSQL, or any data source your business runs on.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="process">
+    <div class="container">
+      <h2 data-i18n="process.title">How we build it</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3 data-i18n="step1.title">Map your tools and data</h3>
+          <p data-i18n="step1.desc">We identify every system and data source that matters to your business.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3 data-i18n="step2.title">Connect and configure</h3>
+          <p data-i18n="step2.desc">We build secure integrations between your tools and the AI layer.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3 data-i18n="step3.title">Train it on your business</h3>
+          <p data-i18n="step3.desc">The system learns your terminology, workflows, and data relationships.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <h3 data-i18n="step4.title">Deploy and expand</h3>
+          <p data-i18n="step4.desc">Start with one use case, then expand as your team discovers new possibilities.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 2rem 0;">
+    <div class="container">
+      <div class="pricing-block">
+        <h3 data-i18n="pricing.range">$15,000 &ndash; $50,000+</h3>
+        <p data-i18n="pricing.note">Depends on complexity. Recurring maintenance available.</p>
+        <a href="mailto:hello@radiopenguinai.com" class="btn btn-primary" data-i18n="pricing.cta">Let&rsquo;s Talk</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="contact">
+    <div class="container">
+      <h2 data-i18n="cta.title">Ready to talk to your business?</h2>
+      <p data-i18n="cta.subtitle">Whether you have a specific question you wish your data could answer or you want to explore what&rsquo;s possible &mdash; let&rsquo;s talk.</p>
+      <a href="mailto:hello@radiopenguinai.com" class="email-link">hello@radiopenguinai.com</a>
+      <a href="mailto:hello@radiopenguinai.com" class="btn btn-primary" data-i18n="cta.btn">Get in Touch</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="logo">
+        <img src="assets/icononly_transparent_nobuffer.png" alt="Radio Penguin AI">
+        Radio Penguin <span>AI</span>
+      </div>
+      <p data-i18n="footer.copyright">&copy; 2026 Radio Penguin AI. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script>lucide.createIcons();</script>
+
+  <script>
+    (function () {
+      var translations = {
+        es: {
+          // Nav
+          'nav.services': 'Todos los Servicios',
+          'nav.about': 'Nosotros',
+          'nav.contact': 'Contacto',
+          'nav.talk': 'Hablemos',
+
+          // Hero
+          'hero.back': '\u2190 Volver a todos los servicios',
+          'hero.title': 'Hazle una pregunta a tu negocio. Obt\u00e9n una respuesta real.',
+          'hero.subtitle': 'Conectamos IA a las herramientas que ya usas \u2014 Salesforce, Google Drive, Slack, tus bases de datos \u2014 para que puedas hablar con tu negocio en espa\u00f1ol.',
+
+          // Imagine
+          'imagine.title': 'Imagina esto',
+          'conv1.q': '\u201c\u00bfCu\u00e1l es el estado del proyecto Johnson y qui\u00e9n lo lidera?\u201d',
+          'conv1.a': '\u201cEl proyecto Johnson est\u00e1 en Fase 2 \u2014 revisi\u00f3n de dise\u00f1o. Sarah Chen es la l\u00edder. La \u00faltima actualizaci\u00f3n fue el martes: el cliente aprob\u00f3 el cronograma revisado.\u201d',
+          'conv2.q': '\u201cMu\u00e9strame todos los clientes en Indiana cuyos contratos se renuevan en los pr\u00f3ximos 90 d\u00edas.\u201d',
+          'conv2.a': '\u201cEncontr\u00e9 23 clientes. 8 est\u00e1n marcados como en riesgo bas\u00e1ndose en tickets de soporte recientes. \u00bfQuieres que redacte comunicaciones de renovaci\u00f3n para las cuentas en riesgo?\u201d',
+
+          // Features
+          'features.title': 'A qu\u00e9 se conecta',
+          'feat1.title': 'Salesforce y CRMs',
+          'feat1.desc': 'Extrae datos de cualquier CRM sin cambiar de pesta\u00f1a ni escribir reportes.',
+          'feat2.title': 'Google Drive y Docs',
+          'feat2.desc': 'Busca y resume documentos instant\u00e1neamente en todo tu drive.',
+          'feat3.title': 'Slack y Teams',
+          'feat3.desc': 'Encuentra informaci\u00f3n de conversaciones y canales bajo demanda.',
+          'feat4.title': 'Tus Bases de Datos',
+          'feat4.desc': 'Con\u00e9ctate directamente a SQL, PostgreSQL o cualquier fuente de datos de tu negocio.',
+
+          // Process
+          'process.title': 'C\u00f3mo lo construimos',
+          'step1.title': 'Mapeamos tus herramientas y datos',
+          'step1.desc': 'Identificamos cada sistema y fuente de datos que importa para tu negocio.',
+          'step2.title': 'Conectamos y configuramos',
+          'step2.desc': 'Construimos integraciones seguras entre tus herramientas y la capa de IA.',
+          'step3.title': 'Lo entrenamos con tu negocio',
+          'step3.desc': 'El sistema aprende tu terminolog\u00eda, flujos de trabajo y relaciones de datos.',
+          'step4.title': 'Desplegamos y expandimos',
+          'step4.desc': 'Empieza con un caso de uso, luego expande a medida que tu equipo descubre nuevas posibilidades.',
+
+          // Pricing
+          'pricing.range': '$15,000 \u2013 $50,000+',
+          'pricing.note': 'Depende de la complejidad. Mantenimiento recurrente disponible.',
+          'pricing.cta': 'Hablemos',
+
+          // CTA
+          'cta.title': '\u00bfListo para hablar con tu negocio?',
+          'cta.subtitle': 'Ya sea que tengas una pregunta espec\u00edfica que desear\u00edas que tus datos pudieran responder o quieras explorar lo que es posible \u2014 hablemos.',
+          'cta.btn': 'Cont\u00e1ctanos',
+
+          // Footer
+          'footer.copyright': '\u00a9 2026 Radio Penguin AI. Todos los derechos reservados.'
+        }
+      };
+
+      var defaults = {};
+      var titleEN = 'Radio Penguin AI | Connect AI';
+      var titleES = 'Radio Penguin AI | Conectar IA';
+
+      // Save English defaults from DOM
+      document.querySelectorAll('[data-i18n]').forEach(function (el) {
+        defaults[el.getAttribute('data-i18n')] = el.innerHTML;
+      });
+
+      function applyLanguage(lang) {
+        document.documentElement.setAttribute('lang', lang);
+
+        if (lang === 'es') {
+          document.querySelectorAll('[data-i18n]').forEach(function (el) {
+            var key = el.getAttribute('data-i18n');
+            if (translations.es[key]) el.innerHTML = translations.es[key];
+          });
+          document.title = titleES;
+        } else {
+          document.querySelectorAll('[data-i18n]').forEach(function (el) {
+            var key = el.getAttribute('data-i18n');
+            if (defaults[key]) el.innerHTML = defaults[key];
+          });
+          document.title = titleEN;
+        }
+
+        // Update toggle button text
+        var toggle = document.getElementById('lang-toggle');
+        if (toggle) {
+          toggle.textContent = lang === 'es' ? 'EN' : 'ES';
+          toggle.setAttribute('aria-label', lang === 'es' ? 'Switch to English' : 'Cambiar a espa\u00f1ol');
+        }
+
+        localStorage.setItem('lang', lang);
+      }
+
+      function detectLanguage() {
+        var stored = localStorage.getItem('lang');
+        if (stored) return stored;
+        var browserLang = navigator.language || navigator.userLanguage || '';
+        return browserLang.startsWith('es') ? 'es' : 'en';
+      }
+
+      // Apply language on load
+      var lang = detectLanguage();
+      applyLanguage(lang);
+
+      // Toggle handler
+      document.getElementById('lang-toggle').addEventListener('click', function () {
+        var current = document.documentElement.getAttribute('lang');
+        applyLanguage(current === 'es' ? 'en' : 'es');
+      });
+    })();
+  </script>
+
+</body>
+</html>
