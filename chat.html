@@ -746,6 +746,7 @@ const i18n = {
 
 function setLang(lang) {
   currentLang = lang;
+  if (typeof saveState === "function") saveState();
 
   // Update toggle buttons
   document.querySelectorAll(".lang-btn").forEach(btn => {
@@ -791,10 +792,32 @@ if (navigator.language.startsWith("es")) {
 }
 
 // =====================================================
-// State
+// State (with session persistence)
 // =====================================================
-const messages = [];
-const sessionId = crypto.randomUUID();
+const STORAGE_KEY = "rp_chat_state";
+
+function loadState() {
+  try {
+    const saved = sessionStorage.getItem(STORAGE_KEY);
+    if (saved) return JSON.parse(saved);
+  } catch (e) { /* ignore */ }
+  return null;
+}
+
+function saveState() {
+  try {
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify({
+      messages,
+      sessionId,
+      contactFormSubmitted,
+      lang: currentLang,
+    }));
+  } catch (e) { /* ignore */ }
+}
+
+const savedState = loadState();
+const messages = savedState?.messages || [];
+const sessionId = savedState?.sessionId || crypto.randomUUID();
 let isStreaming = false;
 
 // =====================================================
@@ -808,6 +831,57 @@ const sendBtn = document.getElementById("sendBtn");
 chatInput.addEventListener("input", () => {
   sendBtn.disabled = chatInput.value.trim() === "" || isStreaming;
 });
+
+// =====================================================
+// Restore previous conversation
+// =====================================================
+function restoreConversation() {
+  if (messages.length === 0) return;
+
+  // Hide welcome, show messages
+  welcomeScreen.style.display = "none";
+  chatMessages.style.display = "flex";
+
+  // Restore language
+  if (savedState?.lang) setLang(savedState.lang);
+
+  // Restore contact form state
+  if (savedState?.contactFormSubmitted) contactFormSubmitted = true;
+
+  // Re-render all messages
+  for (const msg of messages) {
+    // Skip the contact info submission messages from showing
+    if (msg.role === "user" && msg.content.startsWith("[Contact info submitted:")) continue;
+
+    let displayText = msg.content;
+
+    // Handle contact form marker
+    if (msg.role === "assistant" && displayText.includes("{{CONTACT_FORM}}")) {
+      displayText = displayText.replace(/\{\{CONTACT_FORM\}\}/g, "").trim();
+    }
+
+    appendMessage(msg.role === "user" ? "user" : "ai", displayText);
+  }
+
+  // Re-render contact form if it was shown
+  const hadForm = messages.some(m => m.role === "assistant" && m.content.includes("{{CONTACT_FORM}}"));
+  if (hadForm && contactFormSubmitted) {
+    // Show submitted state
+    const card = document.createElement("div");
+    card.className = "contact-form-card";
+    const t = i18n[currentLang];
+    const contactMsg = messages.find(m => m.role === "user" && m.content.startsWith("[Contact info submitted:"));
+    const name = contactMsg ? contactMsg.content.match(/Name: ([^,\]]+)/)?.[1] || "" : "";
+    card.innerHTML = `<div class="contact-form-success"><div class="checkmark">&#10003;</div>${t.formSuccess(name)}</div>`;
+    chatMessages.appendChild(card);
+  } else if (hadForm && !contactFormSubmitted) {
+    renderContactForm();
+  }
+
+  scrollToBottom();
+}
+
+restoreConversation();
 
 function autoResize(el) {
   el.style.height = "auto";
@@ -843,6 +917,7 @@ async function sendMessage() {
   }
 
   messages.push({ role: "user", content: text });
+  saveState();
   appendMessage("user", text);
 
   chatInput.value = "";
@@ -908,6 +983,7 @@ async function sendMessage() {
         aiText = cleanText;
       }
       messages.push({ role: "assistant", content: aiText });
+      saveState();
     }
 
   } catch (err) {
@@ -1028,6 +1104,7 @@ function submitContactForm() {
   }
 
   contactFormSubmitted = true;
+  saveState();
 
   // Replace form with success message
   const card = document.querySelector(".contact-form-card");
