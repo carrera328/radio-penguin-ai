@@ -447,6 +447,96 @@
     letter-spacing: 0.02em;
   }
 
+  /* ── Contact Form Card ── */
+  .contact-form-card {
+    background: var(--card-bg);
+    border: 1px solid var(--gold);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-top: 0.5rem;
+    max-width: 82%;
+    animation: msgIn 0.2s ease-out;
+  }
+
+  .contact-form-card h3 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+
+  .contact-form-card .form-group {
+    margin-bottom: 0.6rem;
+  }
+
+  .contact-form-card input {
+    width: 100%;
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 0.6rem 0.75rem;
+    font-size: 0.85rem;
+    font-family: inherit;
+    color: var(--text);
+    background: var(--bg);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .contact-form-card input:focus {
+    border-color: var(--gold);
+  }
+
+  .contact-form-card input::placeholder {
+    color: var(--text-muted);
+  }
+
+  .contact-form-card .form-submit {
+    width: 100%;
+    padding: 0.65rem;
+    border: none;
+    border-radius: 8px;
+    background: var(--gold);
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    margin-top: 0.25rem;
+  }
+
+  .contact-form-card .form-submit:hover {
+    background: var(--gold-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(222,145,45,0.3);
+  }
+
+  .contact-form-card .form-submit:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .contact-form-card .form-note {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+
+  .contact-form-success {
+    text-align: center;
+    padding: 1rem;
+    color: var(--text);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .contact-form-success .checkmark {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+  }
+
   /* ── Responsive ── */
   @media (max-width: 600px) {
     .chat-messages { padding: 1rem 0.75rem; }
@@ -455,6 +545,7 @@
     .message { max-width: 90%; }
     .welcome { padding: 2rem 1rem; }
     .starter-btn { font-size: 0.9rem; padding: 1rem 0; }
+    .contact-form-card { max-width: 95%; }
   }
 </style>
 </head>
@@ -648,6 +739,13 @@ async function sendMessage() {
     }
 
     if (aiText) {
+      // Check for contact form marker
+      if (aiText.includes("{{CONTACT_FORM}}")) {
+        const cleanText = aiText.replace(/\{\{CONTACT_FORM\}\}/g, "").trim();
+        aiBubble.querySelector(".msg-bubble").innerHTML = formatText(cleanText);
+        renderContactForm();
+        aiText = cleanText;
+      }
       messages.push({ role: "assistant", content: aiText });
     }
 
@@ -726,6 +824,80 @@ function formatText(text) {
     .replace(/\*([^*]+)\*/g, '<em>$1</em>')
     .replace(/([\w.-]+@[\w.-]+\.\w+)/g, '<a href="mailto:$1">$1</a>')
     .replace(/\n/g, "<br>");
+}
+
+// =====================================================
+// Contact Form
+// =====================================================
+let contactFormSubmitted = false;
+
+function renderContactForm() {
+  if (contactFormSubmitted) return;
+
+  const card = document.createElement("div");
+  card.className = "contact-form-card";
+  card.innerHTML = `
+    <h3>Get your free consultation</h3>
+    <div class="form-group">
+      <input type="text" id="cf-name" placeholder="Your name" autocomplete="name">
+    </div>
+    <div class="form-group">
+      <input type="email" id="cf-email" placeholder="Email address" autocomplete="email">
+    </div>
+    <div class="form-group">
+      <input type="tel" id="cf-phone" placeholder="Phone number (optional)" autocomplete="tel">
+    </div>
+    <button class="form-submit" onclick="submitContactForm()">Send my info</button>
+    <div class="form-note">We'll reach out within 1 business day.</div>
+  `;
+  chatMessages.appendChild(card);
+  scrollToBottom();
+}
+
+function submitContactForm() {
+  const name = document.getElementById("cf-name").value.trim();
+  const email = document.getElementById("cf-email").value.trim();
+  const phone = document.getElementById("cf-phone").value.trim();
+
+  if (!name || !email) {
+    document.getElementById("cf-name").style.borderColor = name ? "" : "var(--gold)";
+    document.getElementById("cf-email").style.borderColor = email ? "" : "var(--gold)";
+    return;
+  }
+
+  contactFormSubmitted = true;
+
+  // Replace form with success message
+  const card = document.querySelector(".contact-form-card");
+  card.innerHTML = `
+    <div class="contact-form-success">
+      <div class="checkmark">&#10003;</div>
+      Thanks, ${name}! Someone from our team will reach out soon.
+    </div>
+  `;
+  scrollToBottom();
+
+  // Build conversation summary for Notion
+  const summary = messages
+    .filter(m => m.role === "user" || m.role === "assistant")
+    .map(m => `${m.role === "user" ? "Visitor" : "AI"}: ${m.content}`)
+    .join("\n")
+    .slice(0, 1800);
+
+  // Send lead to Notion via worker
+  fetch(WORKER_URL + "/lead", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email, phone: phone || null, conversationSummary: summary }),
+  }).catch(err => console.error("Lead submit error:", err));
+
+  // Add to conversation so AI knows
+  const contactMsg = `[Contact info submitted: Name: ${name}, Email: ${email}${phone ? ", Phone: " + phone : ""}]`;
+  messages.push({ role: "user", content: contactMsg });
+
+  // Send a follow-up to get the AI's thank you
+  chatInput.value = contactMsg;
+  sendMessage();
 }
 </script>
 

@@ -79,10 +79,22 @@ IMPORTANT — Do NOT let conversations drag on:
 - Do NOT keep asking more questions hoping for clarity. Make your best recommendation and let the human consultation handle the details.
 
 Lead Capture — THIS IS CRITICAL:
-Once you've recommended a service path, ask for contact info as a separate one-liner:
-- "Want us to take a look? Drop your email or phone and someone from our team will reach out — a real person, not a bot."
-- "If that sounds interesting, leave your email or number and we'll set up a free consultation."
-Keep it to ONE sentence. No-pressure. If they provide contact info, just say thanks and that someone will be in touch soon.`;
+Once you've recommended a service path, ask for contact info with a short one-liner AND include the exact marker {{CONTACT_FORM}} at the very end of your message (on its own line). The frontend will detect this marker and display a clean contact form. Examples:
+
+"This sounds like a great fit for our Reduce Your Software Costs service. Want someone from our team to take a closer look? Just fill out the form below — free consultation, real person, no pressure.
+
+{{CONTACT_FORM}}"
+
+"Honestly, this is easier to figure out on a quick call. Fill out the form and someone will reach out!
+
+{{CONTACT_FORM}}"
+
+RULES:
+- Always include {{CONTACT_FORM}} when it's time to capture contact info
+- Put it on its own line at the END of the message
+- Only use it ONCE per conversation
+- If they already submitted the form, do NOT include it again — just thank them
+- Keep the lead-in text to 1-2 sentences max`;
 
 // --- Rate Limiting (in-memory, resets on Worker restart) ---
 
@@ -160,11 +172,54 @@ function getCorsHeaders(request) {
   };
 }
 
+// --- Notion Lead Capture ---
+
+const NOTION_DATA_SOURCE_ID = "86f8fd22-694e-4512-b6cd-b0b8218ca23d"; // Prospects
+
+async function createNotionLead(env, { name, email, phone, notes }) {
+  const response = await fetch(`https://api.notion.com/v1/pages`, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${env.NOTION_API_KEY}`,
+      "Notion-Version": "2025-09-03",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      parent: { type: "data_source_id", data_source_id: NOTION_DATA_SOURCE_ID },
+      properties: {
+        "Name": {
+          title: [{ text: { content: name } }],
+        },
+        "Primary contact email": {
+          email: email,
+        },
+        ...(phone ? { "Primary contact phone": { phone_number: phone } } : {}),
+        "Status": {
+          status: { name: "Not contacted" },
+        },
+        "Lead source": {
+          select: { name: "Inbound" },
+        },
+        ...(notes ? { "Notes": { rich_text: [{ text: { content: notes.slice(0, 2000) } }] } } : {}),
+      },
+    }),
+  });
+
+  if (!response.ok) {
+    const errText = await response.text();
+    console.error("Notion API error:", response.status, errText);
+    return { success: false, error: errText };
+  }
+
+  return { success: true };
+}
+
 // --- Main Handler ---
 
 export default {
   async fetch(request, env) {
     const corsHeaders = getCorsHeaders(request);
+    const url = new URL(request.url);
 
     // Handle preflight
     if (request.method === "OPTIONS") {
@@ -178,6 +233,47 @@ export default {
       });
     }
 
+    // --- /lead endpoint ---
+    if (url.pathname === "/lead") {
+      try {
+        const body = await request.json();
+        const { name, email, phone, conversationSummary } = body;
+
+        if (!name || !email) {
+          return new Response(JSON.stringify({ error: "Name and email required" }), {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+
+        const result = await createNotionLead(env, {
+          name,
+          email,
+          phone: phone || null,
+          notes: conversationSummary || "Submitted via chat widget",
+        });
+
+        if (!result.success) {
+          return new Response(JSON.stringify({ error: "Failed to save lead" }), {
+            status: 502,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+
+        return new Response(JSON.stringify({ success: true }), {
+          status: 200,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      } catch (e) {
+        console.error("Lead endpoint error:", e);
+        return new Response(JSON.stringify({ error: "Something went wrong" }), {
+          status: 500,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+    }
+
+    // --- /chat endpoint (default) ---
     try {
       const body = await request.json();
       const { messages, sessionId } = body;
