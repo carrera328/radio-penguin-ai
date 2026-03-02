@@ -7,6 +7,8 @@
  *
  * Environment variables (set via wrangler secret):
  *   ANTHROPIC_API_KEY — your Claude API key
+ *   NOTION_API_KEY    — Notion internal integration key
+ *   RESEND_API_KEY    — Resend email API key
  */
 
 const SYSTEM_PROMPT = `You are the AI assistant for Radio Penguin AI, an AI consulting company based in Indianapolis. You help website visitors understand what Radio Penguin does and guide them toward the service that best fits their situation.
@@ -214,6 +216,47 @@ async function createNotionLead(env, { name, email, phone, notes }) {
   return { success: true };
 }
 
+// --- Resend Email Notification ---
+
+async function sendLeadEmail(env, { name, email, phone, notes }) {
+  try {
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${env.RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "Radio Penguin AI <leads@radiopenguin.ai>",
+        to: ["hello@radiopenguin.ai"],
+        subject: `🐧 New Lead: ${name}`,
+        html: `
+          <h2>New Lead from Chat Widget</h2>
+          <table style="border-collapse:collapse;font-family:sans-serif;">
+            <tr><td style="padding:8px;font-weight:bold;">Name</td><td style="padding:8px;">${name}</td></tr>
+            <tr><td style="padding:8px;font-weight:bold;">Email</td><td style="padding:8px;"><a href="mailto:${email}">${email}</a></td></tr>
+            ${phone ? `<tr><td style="padding:8px;font-weight:bold;">Phone</td><td style="padding:8px;"><a href="tel:${phone}">${phone}</a></td></tr>` : ""}
+          </table>
+          ${notes ? `<h3>Conversation Summary</h3><p style="white-space:pre-wrap;font-family:sans-serif;">${notes}</p>` : ""}
+          <hr>
+          <p style="color:#888;font-size:12px;">Captured via radiopenguin.ai chat widget</p>
+        `,
+      }),
+    });
+
+    if (!response.ok) {
+      const errText = await response.text();
+      console.error("Resend API error:", response.status, errText);
+      return { success: false, error: errText };
+    }
+
+    return { success: true };
+  } catch (e) {
+    console.error("Resend email error:", e);
+    return { success: false, error: e.message };
+  }
+}
+
 // --- Main Handler ---
 
 export default {
@@ -246,21 +289,34 @@ export default {
           });
         }
 
-        const result = await createNotionLead(env, {
+        const leadData = {
           name,
           email,
           phone: phone || null,
           notes: conversationSummary || "Submitted via chat widget",
-        });
+        };
 
-        if (!result.success) {
+        // Fire both independently — if one fails, the other still works
+        const [notionResult, emailResult] = await Promise.allSettled([
+          createNotionLead(env, leadData),
+          sendLeadEmail(env, leadData),
+        ]);
+
+        const notionOk = notionResult.status === "fulfilled" && notionResult.value.success;
+        const emailOk = emailResult.status === "fulfilled" && emailResult.value.success;
+
+        if (!notionOk) console.error("Notion failed:", notionResult);
+        if (!emailOk) console.error("Email failed:", emailResult);
+
+        // Return success if at least one channel worked
+        if (!notionOk && !emailOk) {
           return new Response(JSON.stringify({ error: "Failed to save lead" }), {
             status: 502,
             headers: { ...corsHeaders, "Content-Type": "application/json" },
           });
         }
 
-        return new Response(JSON.stringify({ success: true }), {
+        return new Response(JSON.stringify({ success: true, notion: notionOk, email: emailOk }), {
           status: 200,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
