@@ -874,6 +874,8 @@ function restoreConversation() {
     const name = contactMsg ? contactMsg.content.match(/Name: ([^,\]]+)/)?.[1] || "" : "";
     card.innerHTML = `<div class="contact-form-success"><div class="checkmark">&#10003;</div>${t.formSuccess(name)}</div>`;
     chatMessages.appendChild(card);
+    const svc = detectServicePage();
+    if (svc) renderServiceCTA(svc);
   } else if (hadForm && !contactFormSubmitted) {
     renderContactForm();
   }
@@ -1068,6 +1070,49 @@ function formatText(text) {
 // =====================================================
 let contactFormSubmitted = false;
 
+// Service page detection from conversation
+const SERVICE_PAGES = [
+  { url: "path-get-online.html", en: "Get Online", es: "Presencia en Línea" },
+  { url: "path-social-media.html", en: "AI Social Media", es: "Redes Sociales con IA" },
+  { url: "path-connect-ai.html", en: "Connect AI to Your Business", es: "Conectar IA a Tu Negocio" },
+  { url: "path-automate.html", en: "Automate Your Processes", es: "Automatizar Tus Procesos" },
+  { url: "path-license-reduction.html", en: "Reduce Your Software Costs", es: "Reducir Costos de Software" },
+];
+
+function detectServicePage() {
+  const allText = messages
+    .filter(m => m.role === "assistant")
+    .map(m => m.content)
+    .join(" ");
+
+  for (const svc of SERVICE_PAGES) {
+    if (allText.includes(svc.url)) return svc;
+  }
+  return null;
+}
+
+function renderServiceCTA(svc) {
+  const label = currentLang === "es"
+    ? `Ver más sobre ${svc.es} →`
+    : `Learn more about ${svc.en} →`;
+
+  const cta = document.createElement("div");
+  cta.style.cssText = "text-align:center;margin:0.75rem 0;";
+  cta.innerHTML = `<a href="${svc.url}" style="
+    display:inline-block;
+    padding:0.65rem 1.5rem;
+    background:var(--gold);
+    color:#fff;
+    font-weight:700;
+    font-size:0.9rem;
+    border-radius:8px;
+    text-decoration:none;
+    transition:background 0.15s ease;
+  " onmouseover="this.style.background='var(--gold-hover)'" onmouseout="this.style.background='var(--gold)'">${label}</a>`;
+  chatMessages.appendChild(cta);
+  scrollToBottom();
+}
+
 function renderContactForm() {
   if (contactFormSubmitted) return;
 
@@ -1109,6 +1154,7 @@ function submitContactForm() {
   // Replace form with success message
   const card = document.querySelector(".contact-form-card");
   const t2 = i18n[currentLang];
+  const detectedService = detectServicePage();
   card.innerHTML = `
     <div class="contact-form-success">
       <div class="checkmark">&#10003;</div>
@@ -1116,6 +1162,11 @@ function submitContactForm() {
     </div>
   `;
   scrollToBottom();
+
+  // Show CTA to the recommended service page
+  if (detectedService) {
+    setTimeout(() => renderServiceCTA(detectedService), 800);
+  }
 
   // Build conversation summary for Notion
   const summary = messages
