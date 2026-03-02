@@ -1,0 +1,6 @@
+# Secrets
+worker/.dev.vars
+.dev.vars
+
+# Node
+node_modules/
