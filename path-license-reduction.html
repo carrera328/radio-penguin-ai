@@ -358,34 +358,6 @@
       font-style: italic;
     }
 
-    /* Pricing Block */
-    .pricing-block {
-      background: var(--accent);
-      color: #fff;
-      padding: 3rem;
-      border-radius: 12px;
-      text-align: center;
-      margin: 3rem 0;
-    }
-
-    .pricing-block h3 {
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .pricing-block p {
-      color: rgba(255, 255, 255, 0.8);
-      margin-bottom: 1.5rem;
-    }
-
-    .pricing-block .btn-primary {
-      background: #fff;
-      color: var(--accent);
-    }
-
-    .pricing-block .btn-primary:hover {
-      background: rgba(255, 255, 255, 0.9);
-    }
 
     /* CTA */
     .cta {
@@ -488,7 +460,7 @@
 
   <section class="problem-section">
     <div class="container">
-      <p data-i18n="problem.text">A 100-person company paying $150/seat/month for a CRM they use to track leads and send emails? That's $180,000 a year for features they'll never touch.</p>
+      <p data-i18n="problem.text">A 100-person company paying enterprise rates for a CRM they use to track leads and send emails? That's hundreds of thousands a year for features they'll never touch.</p>
     </div>
   </section>
 
@@ -510,25 +482,25 @@
           <tbody>
             <tr>
               <td data-i18n="table.row1.tool">CRM (Enterprise)</td>
-              <td class="paying" data-i18n="table.row1.paying">$150/seat/mo</td>
+              <td class="paying" data-i18n="table.row1.paying">Enterprise per-seat rate</td>
               <td data-i18n="table.row1.use">Lead tracking, basic pipeline</td>
               <td class="recommendation" data-i18n="table.row1.rec">Custom build or downgrade &mdash; save 60-80%</td>
             </tr>
             <tr>
               <td data-i18n="table.row2.tool">Marketing automation</td>
-              <td class="paying" data-i18n="table.row2.paying">$800/mo</td>
+              <td class="paying" data-i18n="table.row2.paying">Premium monthly plan</td>
               <td data-i18n="table.row2.use">Email campaigns only</td>
               <td class="recommendation" data-i18n="table.row2.rec">AI-powered alternative &mdash; save 70%</td>
             </tr>
             <tr>
               <td data-i18n="table.row3.tool">Reporting / BI tool</td>
-              <td class="paying" data-i18n="table.row3.paying">$70/seat/mo</td>
+              <td class="paying" data-i18n="table.row3.paying">Per-seat monthly fee</td>
               <td data-i18n="table.row3.use">3 dashboards</td>
               <td class="recommendation" data-i18n="table.row3.rec">Custom dashboards &mdash; one-time cost</td>
             </tr>
             <tr>
               <td data-i18n="table.row4.tool">Scheduling software</td>
-              <td class="paying" data-i18n="table.row4.paying">$45/seat/mo</td>
+              <td class="paying" data-i18n="table.row4.paying">Per-seat monthly fee</td>
               <td data-i18n="table.row4.use">Basic dispatch</td>
               <td class="recommendation" data-i18n="table.row4.rec">Integrated into custom system</td>
             </tr>
@@ -592,15 +564,6 @@
     </div>
   </section>
 
-  <section style="padding: 5rem 0;">
-    <div class="container">
-      <div class="pricing-block">
-        <h3 data-i18n="pricing.price">$10,000 &ndash; $50,000+</h3>
-        <p data-i18n="pricing.detail">Audit starts at $2,500. Savings typically pay for the project within 3-6 months.</p>
-        <a href="mailto:hello@radiopenguinai.com" class="btn btn-primary" data-i18n="pricing.cta">Let's Talk</a>
-      </div>
-    </div>
-  </section>
 
   <section class="cta" id="contact">
     <div class="container">
@@ -642,7 +605,7 @@
           'hero.subtitle': 'Pagas precios empresariales por herramientas que tu equipo usa al 20%. Auditamos lo que necesitas, cortamos lo que no, y construimos alternativas personalizadas que cuestan una fracci\u00f3n.',
 
           // Problem
-          'problem.text': '\u00bfUna empresa de 100 personas pagando $150/usuario/mes por un CRM que usan para rastrear prospectos y enviar correos? Eso son $180,000 al a\u00f1o por funciones que nunca tocar\u00e1n.',
+          'problem.text': '\u00bfUna empresa de 100 personas pagando tarifas empresariales por un CRM que usan para rastrear prospectos y enviar correos? Eso son cientos de miles al a\u00f1o por funciones que nunca tocar\u00e1n.',
 
           // Audit table
           'audit.title': 'C\u00f3mo se ve una auditor\u00eda t\u00edpica',
@@ -651,19 +614,19 @@
           'table.use': 'Lo que usas',
           'table.recommendation': 'Nuestra recomendaci\u00f3n',
           'table.row1.tool': 'CRM (Empresarial)',
-          'table.row1.paying': '$150/usuario/mes',
+          'table.row1.paying': 'Tarifa empresarial por usuario',
           'table.row1.use': 'Seguimiento de prospectos, pipeline b\u00e1sico',
           'table.row1.rec': 'Construcci\u00f3n personalizada o bajar de nivel \u2014 ahorra 60-80%',
           'table.row2.tool': 'Automatizaci\u00f3n de marketing',
-          'table.row2.paying': '$800/mes',
+          'table.row2.paying': 'Plan mensual premium',
           'table.row2.use': 'Solo campa\u00f1as de email',
           'table.row2.rec': 'Alternativa con IA \u2014 ahorra 70%',
           'table.row3.tool': 'Herramienta de reportes / BI',
-          'table.row3.paying': '$70/usuario/mes',
+          'table.row3.paying': 'Cuota mensual por usuario',
           'table.row3.use': '3 dashboards',
           'table.row3.rec': 'Dashboards personalizados \u2014 costo \u00fanico',
           'table.row4.tool': 'Software de programaci\u00f3n',
-          'table.row4.paying': '$45/usuario/mes',
+          'table.row4.paying': 'Cuota mensual por usuario',
           'table.row4.use': 'Despacho b\u00e1sico',
           'table.row4.rec': 'Integrado en sistema personalizado',
 
@@ -687,11 +650,6 @@
 
           // Credibility
           'credibility.text': 'Hemos pasado m\u00e1s de 20 a\u00f1os dentro de sistemas empresariales como Salesforce, ServiceNow y AWS. No somos externos diciendo \u2018tus herramientas son malas.\u2019 Somos internos diciendo \u2018est\u00e1s pagando por m\u00e1s de lo que necesitas, y sabemos exactamente qu\u00e9 piezas conservar y cu\u00e1les reemplazar.\u2019',
-
-          // Pricing
-          'pricing.price': '$10,000 \u2013 $50,000+',
-          'pricing.detail': 'La auditor\u00eda comienza en $2,500. Los ahorros t\u00edpicamente pagan el proyecto en 3-6 meses.',
-          'pricing.cta': 'Hablemos',
 
           // CTA
           'cta.title': '\u00bfCurioso por saber cu\u00e1nto est\u00e1s pagando de m\u00e1s?',
