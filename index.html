@@ -139,6 +139,8 @@
     .nav-links a:hover { color: var(--text); }
     .nav-links a:hover::after { width: 100%; }
 
+    .nav-lang-item { display: none; }
+
     .nav-actions {
       display: flex;
       align-items: center;
@@ -693,6 +695,7 @@
       }
 
       .nav-links.open { display: flex; }
+      .nav-lang-item { display: list-item; list-style: none; }
 
       .nav-inner { gap: 0.5rem; }
       .nav-actions { gap: 0.5rem; }
@@ -751,13 +754,13 @@
         <li><a href="#services" data-i18n="nav.services">Services</a></li>
         <li><a href="#about" data-i18n="nav.about">About</a></li>
         <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+        <li class="nav-lang-item"><button id="lang-toggle" class="lang-toggle" aria-label="Switch language">ES</button></li>
       </ul>
       <div class="nav-actions">
         <button class="mobile-menu-btn" aria-label="Menu" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
-        <button id="lang-toggle" class="lang-toggle" aria-label="Switch language">ES</button>
-        <a href="mailto:hello@radiopenguinai.com" class="btn-nav" data-i18n="nav.talk">Let's Talk</a>
+        <a href="mailto:hello@radiopenguin.ai" class="btn-nav" data-i18n="nav.talk">Let's Talk</a>
       </div>
     </div>
   </nav>
@@ -767,10 +770,10 @@
     <div class="hero-bg-decoration" aria-hidden="true"></div>
     <div class="container hero-content">
       <p class="hero-label label-sm" data-i18n="hero.label">AI & SALESFORCE CONSULTING</p>
-      <h1 data-i18n="hero.title">Enterprise-grade AI.<br><span class="accent-em">Without the enterprise price.</span></h1>
+      <h1 data-i18n="hero.title">Enterprise-grade AI. <br><span class="accent-em">Without the enterprise price.</span></h1>
       <p class="hero-subtitle" data-i18n="hero.subtitle">We build custom AI systems, Salesforce solutions, and modern web platforms that give growing businesses the same capabilities as the Fortune 500.</p>
       <div class="hero-actions">
-        <a href="mailto:hello@radiopenguinai.com" class="btn-gold" data-i18n="hero.cta">Start a Conversation</a>
+        <a href="mailto:hello@radiopenguin.ai" class="btn-gold" data-i18n="hero.cta">Start a Conversation</a>
         <a href="#solutions" class="btn-ghost" data-i18n="hero.secondary">See What We Build &darr;</a>
       </div>
     </div>
@@ -924,9 +927,9 @@
       <p class="label-sm" data-i18n="cta.label">GET STARTED</p>
       <h2 data-i18n="cta.title">Let's figure out what's possible.</h2>
       <p class="cta-subtitle" data-i18n="cta.subtitle">Whether you have a specific project or just want to explore what AI could do for your business &mdash; we'll have an honest conversation.</p>
-      <a href="mailto:hello@radiopenguinai.com" class="btn-gold-lg" data-i18n="cta.btn">Start a Conversation</a>
+      <a href="mailto:hello@radiopenguin.ai" class="btn-gold-lg" data-i18n="cta.btn">Start a Conversation</a>
       <p class="cta-email">
-        <a href="mailto:hello@radiopenguinai.com" class="email-link">hello@radiopenguinai.com</a>
+        <a href="mailto:hello@radiopenguin.ai" class="email-link">hello@radiopenguin.ai</a>
       </p>
     </div>
   </section>
