@@ -819,6 +819,7 @@ const savedState = loadState();
 const messages = savedState?.messages || [];
 const sessionId = savedState?.sessionId || crypto.randomUUID();
 let isStreaming = false;
+let contactFormSubmitted = false;
 
 // =====================================================
 // DOM
@@ -1068,7 +1069,6 @@ function formatText(text) {
 // =====================================================
 // Contact Form
 // =====================================================
-let contactFormSubmitted = false;
 
 // Service page detection from conversation
 const SERVICE_PAGES = [
