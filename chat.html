@@ -98,6 +98,31 @@
     flex-shrink: 0;
   }
 
+  .chat-header-back {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-left: auto;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+    transition: all 0.15s ease;
+  }
+
+  .chat-header-back:hover {
+    color: var(--gold);
+    background: var(--bg-alt);
+  }
+
+  .chat-header-back svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+
   .chat-header-logo {
     height: 34px;
     width: auto;
@@ -560,6 +585,10 @@
       <div class="chat-header-title">Radio Penguin <span>AI</span></div>
       <div class="chat-header-status"><span class="status-dot"></span> Online</div>
     </div>
+    <a href="index.html" class="chat-header-back">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/></svg>
+      Back to site
+    </a>
   </div>
 
   <!-- Welcome -->
