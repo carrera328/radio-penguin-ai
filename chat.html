@@ -123,6 +123,38 @@
     flex-shrink: 0;
   }
 
+  .lang-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-left: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .lang-btn {
+    padding: 0.3rem 0.55rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .lang-btn.active {
+    background: var(--gold);
+    color: #fff;
+  }
+
+  .lang-btn:hover:not(.active) {
+    background: var(--bg-alt);
+  }
+
   .chat-header-logo {
     height: 34px;
     width: auto;
@@ -585,10 +617,14 @@
       <div class="chat-header-title">Radio Penguin <span>AI</span></div>
       <div class="chat-header-status"><span class="status-dot"></span> Online</div>
     </div>
-    <a href="index.html" class="chat-header-back">
+    <a href="index.html" class="chat-header-back" id="backLink">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/></svg>
-      Back to site
+      <span data-i18n="back">Back to site</span>
     </a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('es')">ES</button>
+    </div>
   </div>
 
   <!-- Welcome -->
@@ -596,31 +632,31 @@
     <div class="welcome-icon">
       <img src="assets/icononly_transparent_nobuffer.png" alt="">
     </div>
-    <p class="welcome-label">AI Assistant</p>
-    <h2>What can we help your business do?</h2>
-    <p class="welcome-sub">Pick a topic below, or just type what's on your mind.</p>
+    <p class="welcome-label" data-i18n="label">AI Assistant</p>
+    <h2 data-i18n="heading">What can we help your business do?</h2>
+    <p class="welcome-sub" data-i18n="sub">Pick a topic below, or just type what's on your mind.</p>
     <div class="starters">
-      <button class="starter-btn" onclick="sendStarter(this)">
+      <button class="starter-btn" onclick="sendStarter(this)" data-i18n="s1">
         We're paying too much for software
         <span class="starter-arrow" aria-hidden="true">&rarr;</span>
       </button>
-      <button class="starter-btn" onclick="sendStarter(this)">
+      <button class="starter-btn" onclick="sendStarter(this)" data-i18n="s2">
         We need a website
         <span class="starter-arrow" aria-hidden="true">&rarr;</span>
       </button>
-      <button class="starter-btn" onclick="sendStarter(this)">
+      <button class="starter-btn" onclick="sendStarter(this)" data-i18n="s3">
         I want AI connected to our tools
         <span class="starter-arrow" aria-hidden="true">&rarr;</span>
       </button>
-      <button class="starter-btn" onclick="sendStarter(this)">
+      <button class="starter-btn" onclick="sendStarter(this)" data-i18n="s4">
         We waste hours on manual work
         <span class="starter-arrow" aria-hidden="true">&rarr;</span>
       </button>
-      <button class="starter-btn" onclick="sendStarter(this)">
+      <button class="starter-btn" onclick="sendStarter(this)" data-i18n="s5">
         We need help with social media
         <span class="starter-arrow" aria-hidden="true">&rarr;</span>
       </button>
-      <button class="starter-btn discovery" onclick="sendStarter(this)">
+      <button class="starter-btn discovery" onclick="sendStarter(this)" data-i18n="s6">
         I'm not sure — help me figure it out
         <span class="starter-arrow" aria-hidden="true">&rarr;</span>
       </button>
@@ -657,6 +693,100 @@
 // CONFIG — Change to your Worker URL after deploying
 // =====================================================
 const WORKER_URL = "https://radio-penguin-chat.carrera-328.workers.dev";
+
+// =====================================================
+// i18n — English / Spanish
+// =====================================================
+let currentLang = "en";
+
+const i18n = {
+  en: {
+    back: "Back to site",
+    label: "AI Assistant",
+    heading: "What can we help your business do?",
+    sub: "Pick a topic below, or just type what's on your mind.",
+    s1: "We're paying too much for software",
+    s2: "We need a website",
+    s3: "I want AI connected to our tools",
+    s4: "We waste hours on manual work",
+    s5: "We need help with social media",
+    s6: "I'm not sure — help me figure it out",
+    placeholder: "Type a message...",
+    formTitle: "Get your free consultation",
+    formName: "Your name",
+    formEmail: "Email address",
+    formPhone: "Phone number (optional)",
+    formSubmit: "Send my info",
+    formNote: "We'll reach out within 1 business day.",
+    formSuccess: (name) => `Thanks, ${name}! Someone from our team will reach out soon.`,
+  },
+  es: {
+    back: "Volver al sitio",
+    label: "Asistente de IA",
+    heading: "¿En qué podemos ayudar a tu negocio?",
+    sub: "Elige un tema o escribe lo que tengas en mente.",
+    s1: "Estamos pagando demasiado por software",
+    s2: "Necesitamos un sitio web",
+    s3: "Quiero conectar IA a nuestras herramientas",
+    s4: "Perdemos horas en trabajo manual",
+    s5: "Necesitamos ayuda con redes sociales",
+    s6: "No estoy seguro — ayúdame a decidir",
+    placeholder: "Escribe un mensaje...",
+    formTitle: "Obtén tu consulta gratis",
+    formName: "Tu nombre",
+    formEmail: "Correo electrónico",
+    formPhone: "Teléfono (opcional)",
+    formSubmit: "Enviar mi información",
+    formNote: "Te contactaremos en 1 día hábil.",
+    formSuccess: (name) => `¡Gracias, ${name}! Alguien de nuestro equipo te contactará pronto.`,
+  }
+};
+
+function setLang(lang) {
+  currentLang = lang;
+
+  // Update toggle buttons
+  document.querySelectorAll(".lang-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.textContent.trim() === lang.toUpperCase());
+  });
+
+  const t = i18n[lang];
+
+  // Update all data-i18n elements
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.dataset.i18n;
+    if (t[key]) {
+      // Preserve the arrow span in starter buttons
+      const arrow = el.querySelector(".starter-arrow");
+      if (arrow) {
+        el.textContent = t[key] + " ";
+        el.appendChild(arrow);
+      } else {
+        el.textContent = t[key];
+      }
+    }
+  });
+
+  // Update placeholder
+  const input = document.getElementById("chatInput");
+  if (input) input.placeholder = t.placeholder;
+
+  // Update contact form if visible and not submitted
+  const formTitle = document.querySelector(".contact-form-card h3");
+  if (formTitle && !contactFormSubmitted) {
+    formTitle.textContent = t.formTitle;
+    document.getElementById("cf-name").placeholder = t.formName;
+    document.getElementById("cf-email").placeholder = t.formEmail;
+    document.getElementById("cf-phone").placeholder = t.formPhone;
+    document.querySelector(".form-submit").textContent = t.formSubmit;
+    document.querySelector(".form-note").textContent = t.formNote;
+  }
+}
+
+// Auto-detect browser language
+if (navigator.language.startsWith("es")) {
+  setTimeout(() => setLang("es"), 0);
+}
 
 // =====================================================
 // State
@@ -865,19 +995,20 @@ function renderContactForm() {
 
   const card = document.createElement("div");
   card.className = "contact-form-card";
+  const t = i18n[currentLang];
   card.innerHTML = `
-    <h3>Get your free consultation</h3>
+    <h3>${t.formTitle}</h3>
     <div class="form-group">
-      <input type="text" id="cf-name" placeholder="Your name" autocomplete="name">
+      <input type="text" id="cf-name" placeholder="${t.formName}" autocomplete="name">
     </div>
     <div class="form-group">
-      <input type="email" id="cf-email" placeholder="Email address" autocomplete="email">
+      <input type="email" id="cf-email" placeholder="${t.formEmail}" autocomplete="email">
     </div>
     <div class="form-group">
-      <input type="tel" id="cf-phone" placeholder="Phone number (optional)" autocomplete="tel">
+      <input type="tel" id="cf-phone" placeholder="${t.formPhone}" autocomplete="tel">
     </div>
-    <button class="form-submit" onclick="submitContactForm()">Send my info</button>
-    <div class="form-note">We'll reach out within 1 business day.</div>
+    <button class="form-submit" onclick="submitContactForm()">${t.formSubmit}</button>
+    <div class="form-note">${t.formNote}</div>
   `;
   chatMessages.appendChild(card);
   scrollToBottom();
@@ -898,10 +1029,11 @@ function submitContactForm() {
 
   // Replace form with success message
   const card = document.querySelector(".contact-form-card");
+  const t2 = i18n[currentLang];
   card.innerHTML = `
     <div class="contact-form-success">
       <div class="checkmark">&#10003;</div>
-      Thanks, ${name}! Someone from our team will reach out soon.
+      ${t2.formSuccess(name)}
     </div>
   `;
   scrollToBottom();
