@@ -4,3 +4,12 @@ worker/.dev.vars
 
 # Node
 node_modules/
+
+# Claude Code
+.claude/
+
+# MCP config (contains auth tokens)
+.mcp.json
+
+# OS files
+.DS_Store
